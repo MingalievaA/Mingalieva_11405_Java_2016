@@ -1,0 +1,2 @@
+id,name,email,login,password,role
+1,Конь в Пальто,amigodebian@gmail.com,test,$2a$10$10igICuILjyast3fN5A9seIRrXPRlfnU9bFNguqgV0InX1KvmO8NK,ROLE_USER

@@ -1,0 +1,148 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20160407_2218
+      author: olga
+      changes:
+        - createTable:
+            tableName: user_table
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: login
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: varchar(255)
+
+        - createTable:
+            tableName: product
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: url
+                  type: varchar(255)
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(1023)
+        - createTable:
+            tableName: basket
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: product_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: basket_id
+                  type: varchar(255)
+              - column:
+                  name: product_count
+                  type: integer
+
+        - addForeignKeyConstraint:
+              baseColumnNames: user_id
+              baseTableName: basket
+              constraintName: fk_user_basket
+              deferrable: true
+              initiallyDeferred: true
+              onDelete: CASCADE
+              onUpdate: RESTRICT
+              referencedColumnNames: id
+              referencedTableName: user_table
+        - addForeignKeyConstraint:
+              baseColumnNames: product_id
+              baseTableName: basket
+              constraintName: fk_product_basket
+              deferrable: true
+              initiallyDeferred: true
+              onDelete: CASCADE
+              onUpdate: RESTRICT
+              referencedColumnNames: id
+              referencedTableName: product
+        - createSequence:
+              cycle: true
+              incrementBy: 1
+              minValue: 1
+              schemaName: public
+              sequenceName: user_id_seq
+              startValue: 1
+        - createSequence:
+              cycle: true
+              incrementBy: 1
+              minValue: 1
+              schemaName: public
+              sequenceName: basket_id_seq
+              startValue: 1
+        - createSequence:
+              cycle: true
+              incrementBy: 1
+              minValue: 1
+              schemaName: public
+              sequenceName: product_id_seq
+              startValue: 1
+
+  - changeSet:
+      id: 20160407_2247
+      author: olga
+      changes:
+        - loadUpdateData:
+            tableName: user_table
+            primaryKey: id
+            file: db/changelog/data/user.csv
+
+  - changeSet:
+        id: 20160407_2248
+        author: olga
+        changes:
+          - loadUpdateData:
+              tableName: product
+              primaryKey: id
+              file: db/changelog/data/product.csv
